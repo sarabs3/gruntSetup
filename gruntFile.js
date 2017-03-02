@@ -12,9 +12,29 @@ module.exports = function(grunt) {
 		        'dist/contact.html': 'src/contact.html'
 		      }
 		    }
+		},
+		sass: {
+			dist: {
+				files: {
+					'src/style/style.css' : 'src/sass/style.scss'
+				}
+			}
+		},
+		watch: {
+			css: {
+				files: '**/*.scss',
+				tasks: ['sass']
+			},
+			html:{
+				files:"src/*.html",
+				tasks:["htmlmin"]
+			}
 		}
+
 	});
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
+	grunt.loadNpmTasks("grunt-contrib-sass");
+	grunt.loadNpmTasks("grunt-contrib-watch");
 
 	// this would be run by typing "grunt test" on the command line
 	grunt.registerTask('test', ['jshint']);
@@ -23,5 +43,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('annotate', ['ngAnnotate', 'concat']);
 
 	// the default task can be run just by typing "grunt" on the command line
-	grunt.registerTask('default', ['htmlmin']);
+	grunt.registerTask('default', ['watch']);
 };
